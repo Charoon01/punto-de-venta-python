@@ -50,7 +50,7 @@ class PuntoDeVenta:
             [sg.Table(
                 values=lista_maquinas,
                 headings=['ID', 'Nombre', 'Estado', 'Stock'],
-                max_col_widths=[5, 20, 10, 8],
+                max_col_width=20,
                 size=(45, 6),
                 key='-TABLA_MAQUINAS-',
                 select_mode=sg.TABLE_SELECT_MODE_SINGLE_ROW
@@ -64,7 +64,7 @@ class PuntoDeVenta:
             [sg.Table(
                 values=[],
                 headings=['Máquina', 'Cantidad', 'Estado', 'Subtotal'],
-                max_col_widths=[15, 10, 15, 12],
+                max_col_width=20,
                 size=(45, 8),
                 key='-CARRITO-'
             )],
@@ -94,7 +94,7 @@ class PuntoDeVenta:
             [sg.Table(
                 values=lista_maquinas,
                 headings=['ID', 'Nombre', 'Descripción', 'Estado', 'Cantidad'],
-                max_col_widths=[5, 15, 20, 15, 10],
+                max_col_width=20,
                 size=(100, 15),
                 key='-TABLA_MAQUINAS-',
                 select_mode=sg.TABLE_SELECT_MODE_SINGLE_ROW
@@ -135,7 +135,7 @@ class PuntoDeVenta:
             [sg.Table(
                 values=movimientos,
                 headings=['ID', 'Máquina', 'Tipo', 'Cantidad', 'Precio Unit.', 'Fecha', 'Descripción'],
-                max_col_widths=[5, 15, 8, 10, 12, 20, 25],
+                max_col_width=20,
                 size=(120, 15),
                 key='-TABLA_MOVIMIENTOS-'
             )]
@@ -168,7 +168,7 @@ class PuntoDeVenta:
             [sg.Table(
                 values=datos,
                 headings=['ID', 'Máquina', 'Cantidad', 'Estado', 'Total'],
-                max_col_widths=[5, 20, 10, 15, 15],
+                max_col_width=20,
                 size=(80, 15),
                 key='-TABLA_REPORTE-'
             )],
@@ -193,7 +193,7 @@ class PuntoDeVenta:
             [sg.Table(
                 values=datos,
                 headings=['Factura', 'Fecha', 'Dueño', 'Localia', 'Total'],
-                max_col_widths=[15, 20, 20, 20, 15],
+                max_col_width=20,
                 size=(100, 15),
                 key='-TABLA_REPORTE-'
             )],
@@ -427,7 +427,7 @@ class PuntoDeVenta:
             [sg.Table(
                 values=lista_maquinas,
                 headings=['ID', 'Nombre'],
-                max_col_widths=[5, 30],
+                max_col_width=30,
                 size=(40, 8),
                 key='-TABLA_MAQUINAS-',
                 select_mode=sg.TABLE_SELECT_MODE_SINGLE_ROW
@@ -558,7 +558,7 @@ class PuntoDeVenta:
             [sg.Table(
                 values=datos,
                 headings=['ID', 'Máquina', 'Tipo', 'Cantidad', 'Precio Unit.', 'Fecha', 'Descripción'],
-                max_col_widths=[5, 15, 15, 10, 12, 20, 25],
+                max_col_width=20,
                 size=(120, 15),
                 key='-TABLA_REPORTE-'
             )],
