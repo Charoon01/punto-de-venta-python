@@ -31,7 +31,7 @@ class PuntoDeVenta:
             ]
         ]
         
-        return sg.Window('Sistema de Gestión de Máquinas', layout, finalize=True, size=(500, 500), resizable=True, finalize=True)
+        return sg.Window('Sistema de Gestión de Máquinas', layout, finalize=True, size=(500, 500), resizable=True)
     
     def crear_ventana_nueva_entrega(self):
         """Crear ventana para nueva entrega"""
