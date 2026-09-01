@@ -53,7 +53,7 @@ class PuntoDeVenta:
                 max_col_width=20,
                 size=(45, 6),
                 key='-TABLA_MAQUINAS-',
-                select_mode=sg.TABLE_SELECT_MODE_SINGLE_ROW
+                select_mode=sg.TABLE_SELECT_MODE_BROWSE
             )],
             
             [sg.Text('Cantidad:'), sg.InputText(key='-CANTIDAD-', size=(10,))],
@@ -97,7 +97,7 @@ class PuntoDeVenta:
                 max_col_width=20,
                 size=(100, 15),
                 key='-TABLA_MAQUINAS-',
-                select_mode=sg.TABLE_SELECT_MODE_SINGLE_ROW
+                select_mode=sg.TABLE_SELECT_MODE_BROWSE
             )]
         ]
         
@@ -430,7 +430,7 @@ class PuntoDeVenta:
                 max_col_width=30,
                 size=(40, 8),
                 key='-TABLA_MAQUINAS-',
-                select_mode=sg.TABLE_SELECT_MODE_SINGLE_ROW
+                select_mode=sg.TABLE_SELECT_MODE_BROWSE
             )],
             
             [sg.Text('Cantidad:'), sg.InputText(key='-CANTIDAD-', size=(15,))],
