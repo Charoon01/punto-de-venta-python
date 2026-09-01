@@ -20,104 +20,105 @@ class PuntoDeVenta:
     def crear_ventana_principal(self):
         """Crear ventana principal"""
         layout = [
-            [sg.Text('SISTEMA DE PUNTO DE VENTA', font=('Arial', 16, 'bold'), justification='center')],
+            [sg.Text('SISTEMA DE GESTIÓN DE MÁQUINAS', font=('Arial', 16, 'bold'), justification='center')],
             [sg.HorizontalSeparator()],
             [
-                [sg.Button('NUEVA VENTA', size=(15, 2), button_color=('white', 'green'))],
-                [sg.Button('GESTIÓN DE PRODUCTOS', size=(15, 2), button_color=('white', 'blue'))],
+                [sg.Button('NUEVA ENTREGA', size=(15, 2), button_color=('white', 'green'))],
+                [sg.Button('GESTIÓN DE MÁQUINAS', size=(15, 2), button_color=('white', 'blue'))],
                 [sg.Button('HISTORIAL DE INVENTARIO', size=(15, 2), button_color=('white', 'orange'))],
                 [sg.Button('REPORTES', size=(15, 2), button_color=('white', 'purple'))],
                 [sg.Button('SALIR', size=(15, 2), button_color=('white', 'red'))]
             ]
         ]
         
-        return sg.Window('Punto de Venta - Sistema POS', layout, finalize=True, size=(400, 400))
+        return sg.Window('Sistema de Gestión de Máquinas', layout, finalize=True, size=(400, 400))
     
-    def crear_ventana_nueva_venta(self):
-        """Crear ventana para nueva venta"""
-        productos = self.db.obtener_productos()
+    def crear_ventana_nueva_entrega(self):
+        """Crear ventana para nueva entrega"""
+        maquinas = self.db.obtener_maquinas()
         
-        lista_productos = [[p[0], p[1], p[3], p[4]] for p in productos]
+        lista_maquinas = [[m[0], m[1], m[3], m[4]] for m in maquinas]
         
         layout = [
-            [sg.Text('NUEVA VENTA', font=('Arial', 14, 'bold'))],
+            [sg.Text('NUEVA ENTREGA DE MÁQUINA', font=('Arial', 14, 'bold'))],
             [sg.HorizontalSeparator()],
             
-            [sg.Text('Cliente:'), sg.InputText(key='-CLIENTE-', size=(30,))],
+            [sg.Text('Dueño:'), sg.InputText(key='-DUEÑO-', size=(30,))],
+            [sg.Text('Localia:'), sg.InputText(key='-LOCALIA-', size=(30,))],
             
-            [sg.Text('Seleccionar Producto:')],
+            [sg.Text('Seleccionar Máquina:')],
             [sg.Table(
-                values=lista_productos,
-                headings=['ID', 'Nombre', 'Precio', 'Stock'],
+                values=lista_maquinas,
+                headings=['ID', 'Nombre', 'Estado', 'Stock'],
                 max_col_widths=[5, 20, 10, 8],
                 size=(45, 6),
-                key='-TABLA_PRODUCTOS-',
+                key='-TABLA_MAQUINAS-',
                 select_mode=sg.TABLE_SELECT_MODE_SINGLE_ROW
             )],
             
             [sg.Text('Cantidad:'), sg.InputText(key='-CANTIDAD-', size=(10,))],
-            [sg.Button('Agregar al Carrito', size=(20,)), sg.Button('Limpiar Carrito', size=(20,))],
+            [sg.Text('Estado de la Máquina:'), sg.InputText(key='-ESTADO_MAQUINA-', size=(20,))],
+            [sg.Button('Agregar Máquina', size=(20,)), sg.Button('Limpiar Carrito', size=(20,))],
             
-            [sg.Text('CARRITO DE COMPRAS', font=('Arial', 11, 'bold'))],
+            [sg.Text('MÁQUINAS A ENTREGAR', font=('Arial', 11, 'bold'))],
             [sg.Table(
                 values=[],
-                headings=['Producto', 'Cantidad', 'Precio Unit.', 'Subtotal'],
-                max_col_widths=[15, 10, 12, 12],
+                headings=['Máquina', 'Cantidad', 'Estado', 'Subtotal'],
+                max_col_widths=[15, 10, 15, 12],
                 size=(45, 8),
                 key='-CARRITO-'
             )],
             
-            [sg.Text('Total: $'), sg.Text('0.00', key='-TOTAL-', font=('Arial', 12, 'bold'))],
+            [sg.Text('Total: '), sg.Text('0', key='-TOTAL-', font=('Arial', 12, 'bold'))],
             
-            [sg.Button('Procesar Venta', size=(20,), button_color=('white', 'green')), 
+            [sg.Button('Procesar Estado de la Máquina', size=(25,), button_color=('white', 'green')), 
              sg.Button('Cancelar', size=(20,), button_color=('white', 'red'))]
         ]
         
-        return sg.Window('Nueva Venta', layout, finalize=True)
+        return sg.Window('Nueva Entrega de Máquina', layout, finalize=True)
     
-    def crear_ventana_gestion_productos(self):
-        """Crear ventana de gestión de productos"""
-        productos = self.db.obtener_productos()
-        lista_productos = [[p[0], p[1], p[2], p[3], p[4], p[5]] for p in productos]
+    def crear_ventana_gestion_maquinas(self):
+        """Crear ventana de gestión de máquinas"""
+        maquinas = self.db.obtener_maquinas()
+        lista_maquinas = [[m[0], m[1], m[2], m[3], m[4]] for m in maquinas]
         
         layout = [
-            [sg.Text('GESTIÓN DE PRODUCTOS', font=('Arial', 14, 'bold'))],
+            [sg.Text('GESTIÓN DE MÁQUINAS', font=('Arial', 14, 'bold'))],
             [sg.HorizontalSeparator()],
             
-            [sg.Button('Agregar Producto', size=(15,)), 
-             sg.Button('Editar Producto', size=(15,)), 
-             sg.Button('Eliminar Producto', size=(15,)),
+            [sg.Button('Agregar Máquina', size=(15,)), 
+             sg.Button('Editar Máquina', size=(15,)), 
+             sg.Button('Eliminar Máquina', size=(15,)),
              sg.Button('Volver', size=(15,))],
             
             [sg.Table(
-                values=lista_productos,
-                headings=['ID', 'Nombre', 'Descripción', 'Precio', 'Cantidad', 'Código Barras'],
-                max_col_widths=[5, 15, 20, 10, 10, 15],
+                values=lista_maquinas,
+                headings=['ID', 'Nombre', 'Descripción', 'Estado', 'Cantidad'],
+                max_col_widths=[5, 15, 20, 15, 10],
                 size=(100, 15),
-                key='-TABLA_PRODUCTOS-',
+                key='-TABLA_MAQUINAS-',
                 select_mode=sg.TABLE_SELECT_MODE_SINGLE_ROW
             )]
         ]
         
-        return sg.Window('Gestión de Productos', layout, finalize=True)
+        return sg.Window('Gestión de Máquinas', layout, finalize=True)
     
-    def crear_ventana_agregar_producto(self):
-        """Crear ventana para agregar producto"""
+    def crear_ventana_agregar_maquina(self):
+        """Crear ventana para agregar máquina"""
         layout = [
-            [sg.Text('AGREGAR NUEVO PRODUCTO', font=('Arial', 14, 'bold'))],
+            [sg.Text('AGREGAR NUEVA MÁQUINA', font=('Arial', 14, 'bold'))],
             [sg.HorizontalSeparator()],
             
             [sg.Text('Nombre:', size=(15,)), sg.InputText(key='-NOMBRE-', size=(30,))],
             [sg.Text('Descripción:', size=(15,)), sg.Multiline(key='-DESCRIPCION-', size=(30, 4))],
-            [sg.Text('Precio:', size=(15,)), sg.InputText(key='-PRECIO-', size=(15,))],
+            [sg.Text('Estado:', size=(15,)), sg.InputText(key='-ESTADO-', size=(30,))],
             [sg.Text('Cantidad:', size=(15,)), sg.InputText(key='-CANTIDAD-', size=(15,))],
-            [sg.Text('Código Barras:', size=(15,)), sg.InputText(key='-CODIGO-', size=(30,))],
             
             [sg.Button('Guardar', size=(15,), button_color=('white', 'green')), 
              sg.Button('Cancelar', size=(15,), button_color=('white', 'red'))]
         ]
         
-        return sg.Window('Agregar Producto', layout, finalize=True)
+        return sg.Window('Agregar Máquina', layout, finalize=True)
     
     def crear_ventana_historial_inventario(self):
         """Crear ventana de historial de inventario"""
@@ -127,13 +128,13 @@ class PuntoDeVenta:
             [sg.Text('HISTORIAL DE MOVIMIENTOS DE INVENTARIO', font=('Arial', 14, 'bold'))],
             [sg.HorizontalSeparator()],
             
-            [sg.Button('Registrar Entrada', size=(15,), button_color=('white', 'green')), 
-             sg.Button('Registrar Salida', size=(15,), button_color=('white', 'orange')),
+            [sg.Button('Entrada de Stock Nuevo', size=(20,), button_color=('white', 'green')), 
+             sg.Button('Mantenimiento', size=(20,), button_color=('white', 'orange')),
              sg.Button('Volver', size=(15,))],
             
             [sg.Table(
                 values=movimientos,
-                headings=['ID', 'Producto', 'Tipo', 'Cantidad', 'Precio Unit.', 'Fecha', 'Descripción'],
+                headings=['ID', 'Máquina', 'Tipo', 'Cantidad', 'Precio Unit.', 'Fecha', 'Descripción'],
                 max_col_widths=[5, 15, 8, 10, 12, 20, 25],
                 size=(120, 15),
                 key='-TABLA_MOVIMIENTOS-'
@@ -149,7 +150,7 @@ class PuntoDeVenta:
             [sg.HorizontalSeparator()],
             
             [sg.Button('Reporte de Inventario', size=(20,), button_color=('white', 'blue')), 
-             sg.Button('Reporte de Ventas', size=(20,), button_color=('white', 'green')),
+             sg.Button('Reporte de Entrega de Máquinas', size=(20,), button_color=('white', 'green')),
              sg.Button('Reporte de Movimientos', size=(20,), button_color=('white', 'orange')),
              sg.Button('Volver', size=(20,), button_color=('white', 'red'))]
         ]
@@ -166,7 +167,7 @@ class PuntoDeVenta:
             
             [sg.Table(
                 values=datos,
-                headings=['ID', 'Producto', 'Cantidad', 'Precio Unitario', 'Valor Total'],
+                headings=['ID', 'Máquina', 'Cantidad', 'Estado', 'Total'],
                 max_col_widths=[5, 20, 10, 15, 15],
                 size=(80, 15),
                 key='-TABLA_REPORTE-'
@@ -177,12 +178,12 @@ class PuntoDeVenta:
         
         return sg.Window('Reporte de Inventario', layout, finalize=True)
     
-    def crear_ventana_reporte_ventas(self):
-        """Crear ventana de reporte de ventas"""
-        datos = self.db.obtener_reporte_ventas()
+    def crear_ventana_reporte_entregas(self):
+        """Crear ventana de reporte de entregas"""
+        datos = self.db.obtener_reporte_entregas()
         
         layout = [
-            [sg.Text('REPORTE DE VENTAS', font=('Arial', 14, 'bold'))],
+            [sg.Text('REPORTE DE ENTREGA DE MÁQUINAS', font=('Arial', 14, 'bold'))],
             [sg.HorizontalSeparator()],
             
             [sg.Text('Desde:'), sg.InputText(key='-FECHA_INICIO-', size=(15,)), 
@@ -191,16 +192,16 @@ class PuntoDeVenta:
             
             [sg.Table(
                 values=datos,
-                headings=['Factura', 'Fecha', 'Cliente', 'Total'],
-                max_col_widths=[15, 20, 20, 15],
-                size=(80, 15),
+                headings=['Factura', 'Fecha', 'Dueño', 'Localia', 'Total'],
+                max_col_widths=[15, 20, 20, 20, 15],
+                size=(100, 15),
                 key='-TABLA_REPORTE-'
             )],
             
             [sg.Button('Exportar a PDF', size=(15,)), sg.Button('Volver', size=(15,))]
         ]
         
-        return sg.Window('Reporte de Ventas', layout, finalize=True)
+        return sg.Window('Reporte de Entrega de Máquinas', layout, finalize=True)
     
     def mostrar_mensaje(self, titulo, mensaje):
         """Mostrar ventana de mensaje"""
@@ -216,14 +217,14 @@ class PuntoDeVenta:
             if event == sg.WINDOW_CLOSED or event == 'SALIR':
                 break
             
-            elif event == 'NUEVA VENTA':
+            elif event == 'NUEVA ENTREGA':
                 ventana_principal.hide()
-                self.manejar_nueva_venta()
+                self.manejar_nueva_entrega()
                 ventana_principal.un_hide()
             
-            elif event == 'GESTIÓN DE PRODUCTOS':
+            elif event == 'GESTIÓN DE MÁQUINAS':
                 ventana_principal.hide()
-                self.manejar_gestion_productos()
+                self.manejar_gestion_maquinas()
                 ventana_principal.un_hide()
             
             elif event == 'HISTORIAL DE INVENTARIO':
@@ -239,9 +240,9 @@ class PuntoDeVenta:
         ventana_principal.close()
         self.db.close()
     
-    def manejar_nueva_venta(self):
-        """Manejar interfaz de nueva venta"""
-        ventana = self.crear_ventana_nueva_venta()
+    def manejar_nueva_entrega(self):
+        """Manejar interfaz de nueva entrega"""
+        ventana = self.crear_ventana_nueva_entrega()
         carrito = []
         
         while True:
@@ -250,9 +251,9 @@ class PuntoDeVenta:
             if event == sg.WINDOW_CLOSED or event == 'Cancelar':
                 break
             
-            elif event == 'Agregar al Carrito':
-                if not values['-TABLA_PRODUCTOS-']:
-                    self.mostrar_mensaje('Error', 'Seleccione un producto')
+            elif event == 'Agregar Máquina':
+                if not values['-TABLA_MAQUINAS-']:
+                    self.mostrar_mensaje('Error', 'Seleccione una máquina')
                     continue
                 
                 try:
@@ -261,33 +262,36 @@ class PuntoDeVenta:
                         self.mostrar_mensaje('Error', 'La cantidad debe ser mayor a 0')
                         continue
                     
-                    idx = values['-TABLA_PRODUCTOS-'][0]
-                    productos = self.db.obtener_productos()
-                    producto = productos[idx]
+                    idx = values['-TABLA_MAQUINAS-'][0]
+                    maquinas = self.db.obtener_maquinas()
+                    maquina = maquinas[idx]
                     
-                    if cantidad > producto[4]:
+                    if cantidad > maquina[4]:
                         self.mostrar_mensaje('Error', 'No hay suficiente stock')
                         continue
                     
+                    estado_maquina = values['-ESTADO_MAQUINA-']
+                    
                     item = {
-                        'producto_id': producto[0],
-                        'nombre': producto[1],
+                        'maquina_id': maquina[0],
+                        'nombre': maquina[1],
                         'cantidad': cantidad,
-                        'precio_unitario': producto[3],
-                        'subtotal': cantidad * producto[3]
+                        'estado_maquina': estado_maquina,
+                        'subtotal': cantidad
                     }
                     
                     carrito.append(item)
                     
                     # Actualizar vista del carrito
-                    carrito_data = [[item['nombre'], item['cantidad'], item['precio_unitario'], item['subtotal']] for item in carrito]
+                    carrito_data = [[item['nombre'], item['cantidad'], item['estado_maquina'], item['subtotal']] for item in carrito]
                     ventana['-CARRITO-'].update(carrito_data)
                     
                     # Actualizar total
                     total = sum(item['subtotal'] for item in carrito)
-                    ventana['-TOTAL-'].update(f'{total:.2f}')
+                    ventana['-TOTAL-'].update(str(total))
                     
                     ventana['-CANTIDAD-'].update('')
+                    ventana['-ESTADO_MAQUINA-'].update('')
                 
                 except ValueError:
                     self.mostrar_mensaje('Error', 'Ingrese una cantidad válida')
@@ -295,68 +299,69 @@ class PuntoDeVenta:
             elif event == 'Limpiar Carrito':
                 carrito = []
                 ventana['-CARRITO-'].update([])
-                ventana['-TOTAL-'].update('0.00')
+                ventana['-TOTAL-'].update('0')
             
-            elif event == 'Procesar Venta':
+            elif event == 'Procesar Estado de la Máquina':
                 if not carrito:
                     self.mostrar_mensaje('Error', 'El carrito está vacío')
                     continue
                 
-                cliente = values['-CLIENTE-'] or 'Cliente General'
+                dueño = values['-DUEÑO-'] or 'Dueño General'
+                localia = values['-LOCALIA-'] or 'Localia General'
                 
                 detalles = [{
-                    'producto_id': item['producto_id'],
+                    'maquina_id': item['maquina_id'],
                     'cantidad': item['cantidad'],
-                    'precio_unitario': item['precio_unitario']
+                    'estado_maquina': item['estado_maquina']
                 } for item in carrito]
                 
                 numero_factura = self.generar_numero_factura()
-                exito, mensaje = self.db.crear_venta(numero_factura, cliente, detalles)
+                exito, mensaje = self.db.crear_entrega(numero_factura, dueño, localia, detalles)
                 
                 if exito:
                     total = sum(item['subtotal'] for item in carrito)
-                    self.mostrar_mensaje('Éxito', f'Venta realizada\nFactura: {numero_factura}\nTotal: ${total:.2f}')
+                    self.mostrar_mensaje('Éxito', f'Entrega realizada\nFactura: {numero_factura}\nDueño: {dueño}\nLocalia: {localia}\nTotal: {total}')
                     break
                 else:
                     self.mostrar_mensaje('Error', mensaje)
         
         ventana.close()
     
-    def manejar_gestion_productos(self):
-        """Manejar interfaz de gestión de productos"""
+    def manejar_gestion_maquinas(self):
+        """Manejar interfaz de gestión de máquinas"""
         while True:
-            ventana = self.crear_ventana_gestion_productos()
+            ventana = self.crear_ventana_gestion_maquinas()
             event, values = ventana.read()
             
             if event == sg.WINDOW_CLOSED or event == 'Volver':
                 ventana.close()
                 break
             
-            elif event == 'Agregar Producto':
+            elif event == 'Agregar Máquina':
                 ventana.hide()
-                self.manejar_agregar_producto()
+                self.manejar_agregar_maquina()
                 ventana.un_hide()
             
-            elif event == 'Eliminar Producto':
-                if not values['-TABLA_PRODUCTOS-']:
-                    self.mostrar_mensaje('Error', 'Seleccione un producto')
+            elif event == 'Eliminar Máquina':
+                if not values['-TABLA_MAQUINAS-']:
+                    self.mostrar_mensaje('Error', 'Seleccione una máquina')
                     ventana.close()
                     continue
                 
-                idx = values['-TABLA_PRODUCTOS-'][0]
-                productos = self.db.obtener_productos()
-                producto_id = productos[idx][0]
+                idx = values['-TABLA_MAQUINAS-'][0]
+                maquinas = self.db.obtener_maquinas()
+                maquina_id = maquinas[idx][0]
                 
-                exito, mensaje = self.db.eliminar_producto(producto_id)
+                exito, mensaje = self.db.eliminar_maquina(maquina_id)
                 self.mostrar_mensaje('Resultado', mensaje)
                 ventana.close()
                 continue
             
             ventana.close()
     
-    def manejar_agregar_producto(self):
-        """Manejar agregar producto"""
-        ventana = self.crear_ventana_agregar_producto()
+    def manejar_agregar_maquina(self):
+        """Manejar agregar máquina"""
+        ventana = self.crear_ventana_agregar_maquina()
         
         while True:
             event, values = ventana.read()
@@ -368,26 +373,25 @@ class PuntoDeVenta:
                 try:
                     nombre = values['-NOMBRE-']
                     descripcion = values['-DESCRIPCION-']
-                    precio = float(values['-PRECIO-'])
+                    estado = values['-ESTADO-']
                     cantidad = int(values['-CANTIDAD-'])
-                    codigo = values['-CODIGO-']
                     
                     if not nombre:
                         self.mostrar_mensaje('Error', 'El nombre es requerido')
                         continue
                     
-                    if precio < 0 or cantidad < 0:
-                        self.mostrar_mensaje('Error', 'Precio y cantidad no pueden ser negativos')
+                    if cantidad < 0:
+                        self.mostrar_mensaje('Error', 'La cantidad no puede ser negativa')
                         continue
                     
-                    exito, mensaje = self.db.agregar_producto(nombre, descripcion, precio, cantidad, codigo)
+                    exito, mensaje = self.db.agregar_maquina(nombre, descripcion, estado, cantidad)
                     self.mostrar_mensaje('Resultado', mensaje)
                     
                     if exito:
                         break
                 
                 except ValueError:
-                    self.mostrar_mensaje('Error', 'Ingrese valores válidos para precio y cantidad')
+                    self.mostrar_mensaje('Error', 'Ingrese valores válidos para cantidad')
         
         ventana.close()
     
@@ -401,31 +405,31 @@ class PuntoDeVenta:
                 ventana.close()
                 break
             
-            elif event == 'Registrar Entrada' or event == 'Registrar Salida':
+            elif event == 'Entrada de Stock Nuevo' or event == 'Mantenimiento':
                 ventana.hide()
-                self.manejar_movimiento_inventario(event == 'Registrar Entrada')
+                self.manejar_movimiento_inventario(event == 'Entrada de Stock Nuevo')
                 ventana.un_hide()
             
             ventana.close()
     
     def manejar_movimiento_inventario(self, es_entrada):
         """Manejar movimiento de inventario"""
-        productos = self.db.obtener_productos()
-        lista_productos = [[p[0], p[1]] for p in productos]
+        maquinas = self.db.obtener_maquinas()
+        lista_maquinas = [[m[0], m[1]] for m in maquinas]
         
-        tipo = "Entrada" if es_entrada else "Salida"
+        tipo = "Entrada de Stock Nuevo" if es_entrada else "Mantenimiento"
         
         layout = [
-            [sg.Text(f'REGISTRAR {tipo.upper()} DE INVENTARIO', font=('Arial', 14, 'bold'))],
+            [sg.Text(f'REGISTRAR {tipo.upper()}', font=('Arial', 14, 'bold'))],
             [sg.HorizontalSeparator()],
             
-            [sg.Text('Seleccionar Producto:')],
+            [sg.Text('Seleccionar Máquina:')],
             [sg.Table(
-                values=lista_productos,
+                values=lista_maquinas,
                 headings=['ID', 'Nombre'],
                 max_col_widths=[5, 30],
                 size=(40, 8),
-                key='-TABLA_PRODUCTOS-',
+                key='-TABLA_MAQUINAS-',
                 select_mode=sg.TABLE_SELECT_MODE_SINGLE_ROW
             )],
             
@@ -446,31 +450,31 @@ class PuntoDeVenta:
                 break
             
             elif event == 'Guardar':
-                if not values['-TABLA_PRODUCTOS-']:
-                    self.mostrar_mensaje('Error', 'Seleccione un producto')
+                if not values['-TABLA_MAQUINAS-']:
+                    self.mostrar_mensaje('Error', 'Seleccione una máquina')
                     continue
                 
                 try:
-                    idx = values['-TABLA_PRODUCTOS-'][0]
-                    producto_id = productos[idx][0]
+                    idx = values['-TABLA_MAQUINAS-'][0]
+                    maquina_id = maquinas[idx][0]
                     cantidad = int(values['-CANTIDAD-'])
                     precio = float(values['-PRECIO-']) if values['-PRECIO-'] else 0
                     descripcion = values['-DESCRIPCION-']
                     
-                    tipo_movimiento = 'ENTRADA' if es_entrada else 'SALIDA'
+                    tipo_movimiento = 'ENTRADA' if es_entrada else 'MANTENIMIENTO'
                     exito, mensaje = self.db.registrar_movimiento(
-                        producto_id, tipo_movimiento, cantidad, precio, descripcion
+                        maquina_id, tipo_movimiento, cantidad, precio, descripcion
                     )
                     
-                    # Actualizar cantidad del producto
-                    producto = self.db.obtener_producto(producto_id)
-                    nueva_cantidad = producto[4] + cantidad if es_entrada else producto[4] - cantidad
+                    # Actualizar cantidad de la máquina
+                    maquina = self.db.obtener_maquina(maquina_id)
+                    nueva_cantidad = maquina[4] + cantidad if es_entrada else maquina[4] - cantidad
                     
                     if nueva_cantidad < 0:
                         self.mostrar_mensaje('Error', 'No hay suficiente stock')
                         continue
                     
-                    self.db.actualizar_producto(producto_id, producto[1], producto[2], producto[3], nueva_cantidad)
+                    self.db.actualizar_maquina(maquina_id, maquina[1], maquina[2], maquina[3], nueva_cantidad)
                     
                     self.mostrar_mensaje('Éxito', mensaje)
                     break
@@ -495,9 +499,9 @@ class PuntoDeVenta:
                 self.mostrar_reporte_inventario()
                 ventana.un_hide()
             
-            elif event == 'Reporte de Ventas':
+            elif event == 'Reporte de Entrega de Máquinas':
                 ventana.hide()
-                self.mostrar_reporte_ventas()
+                self.mostrar_reporte_entregas()
                 ventana.un_hide()
             
             elif event == 'Reporte de Movimientos':
@@ -522,9 +526,9 @@ class PuntoDeVenta:
         
         ventana.close()
     
-    def mostrar_reporte_ventas(self):
-        """Mostrar reporte de ventas"""
-        ventana = self.crear_ventana_reporte_ventas()
+    def mostrar_reporte_entregas(self):
+        """Mostrar reporte de entregas"""
+        ventana = self.crear_ventana_reporte_entregas()
         
         while True:
             event, values = ventana.read()
@@ -535,7 +539,7 @@ class PuntoDeVenta:
             elif event == 'Filtrar':
                 fecha_inicio = values['-FECHA_INICIO-']
                 fecha_fin = values['-FECHA_FIN-']
-                datos = self.db.obtener_reporte_ventas(fecha_inicio, fecha_fin)
+                datos = self.db.obtener_reporte_entregas(fecha_inicio, fecha_fin)
                 ventana['-TABLA_REPORTE-'].update(datos)
             
             elif event == 'Exportar a PDF':
@@ -548,13 +552,13 @@ class PuntoDeVenta:
         datos = self.db.obtener_reporte_movimientos()
         
         layout = [
-            [sg.Text('REPORTE DE MOVIMIENTOS DE INVENTARIO', font=('Arial', 14, 'bold'))],
+            [sg.Text('REPORTE DE MÁQUINAS TRABAJADAS', font=('Arial', 14, 'bold'))],
             [sg.HorizontalSeparator()],
             
             [sg.Table(
                 values=datos,
-                headings=['ID', 'Producto', 'Tipo', 'Cantidad', 'Precio Unit.', 'Fecha', 'Descripción'],
-                max_col_widths=[5, 15, 8, 10, 12, 20, 25],
+                headings=['ID', 'Máquina', 'Tipo', 'Cantidad', 'Precio Unit.', 'Fecha', 'Descripción'],
+                max_col_widths=[5, 15, 15, 10, 12, 20, 25],
                 size=(120, 15),
                 key='-TABLA_REPORTE-'
             )],
@@ -562,7 +566,7 @@ class PuntoDeVenta:
             [sg.Button('Volver', size=(15,))]
         ]
         
-        ventana = sg.Window('Reporte de Movimientos', layout, finalize=True)
+        ventana = sg.Window('Reporte de Máquinas Trabajadas', layout, finalize=True)
         
         while True:
             event, values = ventana.read()
