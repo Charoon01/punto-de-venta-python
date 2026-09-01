@@ -31,7 +31,7 @@ class PuntoDeVenta:
             ]
         ]
         
-        return sg.Window('Sistema de Gestión de Máquinas', layout, finalize=True, size=(400, 400))
+        return sg.Window('Sistema de Gestión de Máquinas', layout, finalize=True, size=(500, 500), resizable=True, finalize=True)
     
     def crear_ventana_nueva_entrega(self):
         """Crear ventana para nueva entrega"""
@@ -75,7 +75,7 @@ class PuntoDeVenta:
              sg.Button('Cancelar', size=(20,), button_color=('white', 'red'))]
         ]
         
-        return sg.Window('Nueva Entrega de Máquina', layout, finalize=True)
+        return sg.Window('Nueva Entrega de Máquina', layout, finalize=True, resizable=True)
     
     def crear_ventana_gestion_maquinas(self):
         """Crear ventana de gestión de máquinas"""
@@ -101,7 +101,7 @@ class PuntoDeVenta:
             )]
         ]
         
-        return sg.Window('Gestión de Máquinas', layout, finalize=True)
+        return sg.Window('Gestión de Máquinas', layout, finalize=True, resizable=True)
     
     def crear_ventana_agregar_maquina(self):
         """Crear ventana para agregar máquina"""
@@ -118,7 +118,7 @@ class PuntoDeVenta:
              sg.Button('Cancelar', size=(15,), button_color=('white', 'red'))]
         ]
         
-        return sg.Window('Agregar Máquina', layout, finalize=True)
+        return sg.Window('Agregar Máquina', layout, finalize=True, resizable=True)
     
     def crear_ventana_historial_inventario(self):
         """Crear ventana de historial de inventario"""
@@ -141,7 +141,7 @@ class PuntoDeVenta:
             )]
         ]
         
-        return sg.Window('Historial de Inventario', layout, finalize=True)
+        return sg.Window('Historial de Inventario', layout, finalize=True, resizable=True)
     
     def crear_ventana_reportes(self):
         """Crear ventana de reportes"""
@@ -155,7 +155,7 @@ class PuntoDeVenta:
              sg.Button('Volver', size=(20,), button_color=('white', 'red'))]
         ]
         
-        return sg.Window('Reportes', layout, finalize=True)
+        return sg.Window('Reportes', layout, finalize=True, resizable=True)
     
     def crear_ventana_reporte_inventario(self):
         """Crear ventana de reporte de inventario"""
@@ -176,7 +176,7 @@ class PuntoDeVenta:
             [sg.Button('Exportar a PDF', size=(15,)), sg.Button('Volver', size=(15,))]
         ]
         
-        return sg.Window('Reporte de Inventario', layout, finalize=True)
+        return sg.Window('Reporte de Inventario', layout, finalize=True, resizable=True)
     
     def crear_ventana_reporte_entregas(self):
         """Crear ventana de reporte de entregas"""
@@ -201,7 +201,7 @@ class PuntoDeVenta:
             [sg.Button('Exportar a PDF', size=(15,)), sg.Button('Volver', size=(15,))]
         ]
         
-        return sg.Window('Reporte de Entrega de Máquinas', layout, finalize=True)
+        return sg.Window('Reporte de Entrega de Máquinas', layout, finalize=True, resizable=True)
     
     def mostrar_mensaje(self, titulo, mensaje):
         """Mostrar ventana de mensaje"""
@@ -441,7 +441,7 @@ class PuntoDeVenta:
              sg.Button('Cancelar', size=(15,), button_color=('white', 'red'))]
         ]
         
-        ventana = sg.Window(f'Registrar {tipo}', layout, finalize=True)
+        ventana = sg.Window(f'Registrar {tipo}', layout, finalize=True, resizable=True)
         
         while True:
             event, values = ventana.read()
@@ -566,7 +566,7 @@ class PuntoDeVenta:
             [sg.Button('Volver', size=(15,))]
         ]
         
-        ventana = sg.Window('Reporte de Máquinas Trabajadas', layout, finalize=True)
+        ventana = sg.Window('Reporte de Máquinas Trabajadas', layout, finalize=True, resizable=True)
         
         while True:
             event, values = ventana.read()
